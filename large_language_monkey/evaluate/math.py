@@ -4,7 +4,7 @@ import multiprocessing
 import pydra
 from copy import deepcopy
 import re
-from lm_eval.tasks.minerva_math.utils import (
+from lm_eval_utils_eleutherAI.py import (
     last_boxed_only_string,
     normalize_final_answer,
     get_unnormalized_answer,
@@ -12,7 +12,7 @@ from lm_eval.tasks.minerva_math.utils import (
     is_equiv,
 )
 
-from llmonk.utils import load_yaml, save_yaml, EvaluateScriptConfig
+from .utils import load_yaml, save_yaml, EvaluateScriptConfig
 
 
 ANS_RE_GSM8k = re.compile(r"#### (\-?[\$0-9\.\,]+)")
