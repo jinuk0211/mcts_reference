@@ -597,6 +597,7 @@ def code_execution(
 ) -> str:
 
     @timeout(TIMEOUT_SECONDS, exception_message=TIMEOUT_MESSAGE)
+    #@timeout 데코레이터로 시간 제한이 걸려 있으며, 이 시간 동안 작업이 완료되지 않으면 TIMEOUT_MESSAGE를 반환
     def _code_execution(node: Type[BaseNode], parser_result: Dict[str, str]) -> str:
         # Define tool
         action = parser_result["action"]
@@ -628,7 +629,10 @@ def collect_action_inputs(
 ) -> List[str]:
     action_inputs = []
     while node: 
+        #주어진 노드(node)와 액션(action)에 대해, 부모 노드까지 올라가며 동일한 액션에 대한 과거의 입력값을 수집
         if node.state["action"] == action and \
+        # if 조건문이나 다른 문맥에서 사용되었다면, 일반적으로 Python에서 \는 다음 줄의 코드를 이어서 쓰겠다는 의미로 사용
+        #즉 위가 if의 첫번째 조건 밑이 두번쨰 조건
             "TimeoutError" not in node.state["text"].split(node.state["action_input"])[-1]:
             action_inputs.append(node.state["action_input"])
         node = node.parent
