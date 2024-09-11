@@ -89,7 +89,7 @@ class Solver(BaseModel):
     def create_llm(self) -> Callable[[...], List[str]]:
         if self.config.seed:
             set_seed(self.config.seed)
-        engine, sampling_params = llm_engine(self.config)
+        engine, sampling_params = llm_engine(self.config) #vllm의 LLM과 samplingParam를 사용해 initialize
         self.engine = engine
         self.generate_sampling_params = sampling_params
         self.value_sampling_params = copy.deepcopy(sampling_params)
@@ -99,7 +99,7 @@ class Solver(BaseModel):
             local_generator,
             engine=self.engine,
         )
-        
+        #특정 함수 호출 시 일부 인수를 미리 지정하고, 나머지 인수는 나중에 채워 넣음
     @staticmethod
     def processor(solver: BaseTree, output: List[RequestOutput]) -> BaseTree:
         solver.generate_next_step(output)
