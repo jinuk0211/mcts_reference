@@ -48,7 +48,8 @@ from constants import (
 
 class MCTS(SBSREACT): 
     #SBSREACT는 REACT 클래스 wrapper, REACT 클래스는  BaseTree wrapper
-
+    #BaseTree의 abstract 메소드에는 create_node, create_llm, generate함수
+    
     @field_validator("config")
     def validate_config(cls, cfg: Any):
         BaseTree.validate_config(cfg)
