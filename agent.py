@@ -46,7 +46,8 @@ from constants import (
 # from .step_beam import SBSREACT
 
 
-class MCTS(SBSREACT):
+class MCTS(SBSREACT): 
+    #SBSREACT는 REACT 클래스 wrapper, REACT 클래스는  BaseTree wrapper
 
     @field_validator("config")
     def validate_config(cls, cfg: Any):
