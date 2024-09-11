@@ -14,8 +14,36 @@ from agents import SBSREACT
 from agents import MCTS
 from solver import Solver
 from config import BaseConfig
-from react_demo import load_qaf
+# from react_demo import load_qaf
+
+from typing import List, Any, Dict
+
+def load_qaf(filename: str) -> List[Dict[str, Any]]:
+    if filename.endswith(".json"):
+        with open(filename, "r") as f:
+            data = json.load(f)
+        if "example" in data:
+            data = data["example"]
+    elif filename.endswith(".jsonl"):
+        data = []
+        with open(filename, "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            data.append(json.loads(line))
+    else:
+        raise ValueError(f"Unrecognized file format: {filename}")
+    return data
+
+
 from react_batch_demo import batch
+
+
+def batch(iterable, n=-1):
+    l = len(iterable)
+    if n <= 0:
+        n = l
+    for ndx in range(0, l, n):
+        yield iterable[ndx: min(ndx + n, l)]
 
 
 def parse_args():
