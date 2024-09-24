@@ -200,7 +200,10 @@ def is_equiv(x1: str, x2: str) -> bool:
     try:
         with timeout(seconds=5):
             try:
-                parsed_x1 = parse_latex(x1)
+                parsed_x1 = parse_latex(x1) # from sympy.parsing.latex import parse_latex는 Python의 sympy 라이브러리에서 
+                                            #LaTeX 형식의 수식을 파싱(구문 분석)하는 데
+                                            #사용되는 기능을 가져오는 코드입니다.
+                                            #이 코드를 통해 수학적 표현을 LaTeX 문자열로부터 SymPy의 수학 객체로 변환할 수 있습니다
                 parsed_x2 = parse_latex(x2)
             except (
                 sympy.parsing.latex.errors.LaTeXParsingError,
@@ -218,12 +221,12 @@ def is_equiv(x1: str, x2: str) -> bool:
 
             try:
                 if sympy.simplify(diff) == 0:
-                    return True
+                    return True       #정답을 비교해서 같으면 True 반환
                 else:
                     return False
             except ValueError:
                 eval_logger.debug(
-                    f"Had some trouble simplifying when comparing {x1} and {x2}"
+                    f"Had some trouble simplifying when comparing {x1} and {x2}"  
                 )
     except TimeoutError:
         eval_logger.debug(f"Timed out comparing {x1} and {x2}")
@@ -242,10 +245,10 @@ def get_unnormalized_answer(text: str) -> str:
     text += end_seq
     match = re.search(
         r"Final Answer: The final answer is(.*?). I hope it is correct.",
-        text,
-    )
+        text,  
+    )  # re.search는 match를 반환
     if match:
-        return match.group(1).strip()
+        return match.group(1).strip() # match에서 즉, (.*?) 에 오는 text를 반환
     else:
         return INVALID_ANSWER
 
